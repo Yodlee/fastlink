@@ -1,0 +1,2 @@
+rootProject.name='FastLink'
+include ':app'
