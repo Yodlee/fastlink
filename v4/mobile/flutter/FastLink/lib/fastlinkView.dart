@@ -58,9 +58,7 @@ class FastLinkView extends StatelessWidget {
     String _htmlString = '''<html>
 		<body>
 			<form name="fastlink-form" action="$fastLinkURL" method="POST">
-				<input name="login" value="ashwin2" hidden="true" />
-				<input name="password" value="Test@123" hidden="true" />
-				<input name="app" value="10003600" hidden="true" />
+				<input name="accessToken" value="Bearer $accessToken" hidden="true" />
 				<input name="extraParams" value="$extraParams" hidden="true" />
 			</form>
 			<script type="text/javascript">
