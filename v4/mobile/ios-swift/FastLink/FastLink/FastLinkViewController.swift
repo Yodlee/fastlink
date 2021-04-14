@@ -53,7 +53,7 @@ class FastLinkViewController: UIViewController, WKUIDelegate, WKNavigationDelega
         request.httpMethod = "POST"
         
         //All the extraParams should be encoded with URL encode 
-        guard let escapedExtraParams = extraParams.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
+        guard let escapedExtraParams = extraParams.addingPercentEncoding(withAllowedCharacters: .alphanumerics) else { return }
                 
         //Construct the HTTP body params
         let postString = "accessToken=Bearer " + accessToken + "&extraParams=" + (escapedExtraParams)
