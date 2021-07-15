@@ -8,7 +8,7 @@ FastLink uses the Client Credentials authentication mechanism. You need to pass 
 
 ### How to run the Project
 
-Follow the following steps to run the project in your system:
+Follow the steps below to run the project in your system:
 
 Step 1: Open the project in Android Studio
 

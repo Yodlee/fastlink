@@ -1,3 +1,6 @@
+// Copyright (c) 2021 Yodlee, Inc. All Rights Reserved.
+// Licensed under the MIT License. See `LICENSE` for details.
+
 import React, { Component } from 'react'
 import { StyleSheet, Text, TouchableOpacity, ViewPropTypes } from 'react-native'
 import PropTypes from 'prop-types'

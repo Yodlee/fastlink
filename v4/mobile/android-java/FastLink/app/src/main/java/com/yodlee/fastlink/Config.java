@@ -1,5 +1,4 @@
-
-// Copyright (c) 2019 Yodlee, Inc. All Rights Reserved.
+// Copyright (c) 2021 Yodlee, Inc. All Rights Reserved.
 // Licensed under the MIT License. See `LICENSE` for details.
 
 package com.yodlee.fastlink;

@@ -1,3 +1,6 @@
+// Copyright (c) 2021 Yodlee, Inc. All Rights Reserved.
+// Licensed under the MIT License. See `LICENSE` for details.
+
 import 'react-native-gesture-handler'
 import React from 'react'
 import { SafeAreaView, StatusBar } from 'react-native'

@@ -1,3 +1,6 @@
+// Copyright (c) 2021 Yodlee, Inc. All Rights Reserved.
+// Licensed under the MIT License. See `LICENSE` for details.
+
 import React, { useState } from 'react'
 import { View, Text, TextInput, StyleSheet, Image } from 'react-native'
 import Button from './../components/Button'
@@ -13,7 +16,9 @@ const LoginView = props => {
 	const [_accessToken, setAccessToken] = useState('')
 	const [_accessTokenError, setAccessTokenError] = useState(false)
 
-	const [_extraParams, setExtraParams] = useState('configName=Aggregation')
+	const [_extraParams, setExtraParams] = useState(
+		'configName=Aggregation&intentUrl=yodlee://backtofastlink'
+	)
 	const [_extraParamsError, setExtraParamsError] = useState(false)
 
 	const handleNextBtnPress = async value => {

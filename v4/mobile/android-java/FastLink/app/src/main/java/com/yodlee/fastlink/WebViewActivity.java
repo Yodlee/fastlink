@@ -1,23 +1,27 @@
-// Copyright (c) 2019 Yodlee, Inc. All Rights Reserved.
+// Copyright (c) 2021 Yodlee, Inc. All Rights Reserved.
 // Licensed under the MIT License. See `LICENSE` for details.
 
 package com.yodlee.fastlink;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
-import android.annotation.SuppressLint;
+
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.net.http.SslError;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
+
+import com.yodlee.fastlink.util.DownloadFile;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,7 +29,6 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class WebViewActivity extends AppCompatActivity {
 
@@ -56,7 +59,7 @@ public class WebViewActivity extends AppCompatActivity {
 
         try {
             //Create the PostData in the String format
-           String postData = "accessToken=Bearer " +  accessToken +"&extraParams=" + URLEncoder.encode( extraParams, "UTF-8");
+            String postData = "accessToken=Bearer " + accessToken + "&extraParams=" + URLEncoder.encode(extraParams, "UTF-8");
 
             //Post the Data to to FastLink Server through WebView portUrl method.
             //This will load the FastLink application inside the WebView
@@ -65,9 +68,8 @@ public class WebViewActivity extends AppCompatActivity {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-
+        isStoragePermissionGranted();
     }
-
     WebViewClient webClient = new WebViewClient() {
         //To ByPass the SSL certificate error you can enable the following code.
         //This should not be enabled in the production. Production will have the valid certificate.
@@ -80,11 +82,27 @@ public class WebViewActivity extends AppCompatActivity {
             }
         }
     };
+
+    public boolean isStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                return true;
+            } else {
+
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                return false;
+            }
+        } else {
+            return true;
+        }
+    }
 }
 
 class JSInterfaceHandler {
     Context mContext;
     ArrayList<String> eventsInfo = new ArrayList<String>();
+    public static final String MIME_TYPE_PDF = "application/pdf";
 
     JSInterfaceHandler(Context c) {
         mContext = c;
@@ -96,23 +114,48 @@ class JSInterfaceHandler {
         eventsInfo.add(data);
         try {
             JSONObject userData = new JSONObject(data);
-            String  type = userData.getString("type");
+            String type = userData.getString("type");
             JSONObject _data = userData.getJSONObject("data");
 
-            if(type.equals("POST_MESSAGE")){
-                if(_data.has("action") && _data.getString("action").equals("exit")){
+            if (type.equals("POST_MESSAGE")) {
+                if (_data.has("action") && _data.getString("action").equals("exit")) {
                     Intent intent = new Intent(mContext.getApplicationContext(), EventsInfoActivity.class);
                     intent.putExtra("eventsInfo", eventsInfo);
                     mContext.startActivity(intent);
                 }
             }
 
-            if(type.equals("OPEN_EXTERNAL_URL")){
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(_data.getString("url")));
+            if (type.equals("OPEN_EXTERNAL_URL")) {
+
+                String URL = _data.getString("url");
+                String fileName = URL.substring(URL.lastIndexOf('/') + 1);
+                String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
+                if (extension.equalsIgnoreCase("pdf") && !canDisplayPdf(mContext)) {
+                    new DownloadFile().execute(URL, fileName);
+                } else {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(URL));
+                    mContext.startActivity(intent);
+                }
+            }
+
+            if (type.equals("BANK_OAUTH_URL")) {
+                String URL = _data.getString("url");
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(URL));
                 mContext.startActivity(intent);
             }
-        } catch (JSONException e){
+        } catch (JSONException e) {
             Log.d("FL:ERROR", e.getMessage());
+        }
+    }
+
+    public static boolean canDisplayPdf(Context context) {
+        PackageManager packageManager = context.getPackageManager();
+        Intent testIntent = new Intent(Intent.ACTION_VIEW);
+        testIntent.setType(MIME_TYPE_PDF);
+        if (packageManager.queryIntentActivities(testIntent, PackageManager.MATCH_DEFAULT_ONLY).size() > 0) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

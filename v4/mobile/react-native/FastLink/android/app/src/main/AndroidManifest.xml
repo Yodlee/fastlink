@@ -22,6 +22,22 @@
         </intent-filter>
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+        <activity
+                android:name="com.yodlee.fastlink.InAppBrowserActivity"
+                android:configChanges="keyboardHidden|orientation|screenSize"
+                android:label="@string/app_name"
+                android:windowSoftInputMode="adjustResize|adjustPan">
+            <intent-filter>
+                <data
+                        android:host="backtofastlink"
+                        android:scheme="yodlee" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

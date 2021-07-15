@@ -1,3 +1,6 @@
+// Copyright (c) 2021 Yodlee, Inc. All Rights Reserved.
+// Licensed under the MIT License. See `LICENSE` for details.
+
 import 'package:flutter/material.dart';
 import 'config.dart' as Config;
 import 'fastlinkView.dart';
@@ -5,7 +8,7 @@ import 'fastlinkView.dart';
 class LoginView extends StatelessWidget {
   String fastLinkURL = Config.FASTLINK_URL;
   String accessToken = "";
-  String extraParams = "configName=Aggregation";
+  String extraParams = "configName=Aggregation&intentUrl=yodlee://backtofastlink";
 
   @override
   Widget build(BuildContext context) {
