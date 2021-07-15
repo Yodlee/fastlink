@@ -1,3 +1,6 @@
+// Copyright (c) 2021 Yodlee, Inc. All Rights Reserved.
+// Licensed under the MIT License. See `LICENSE` for details.
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -79,6 +82,10 @@ class FastLinkView extends StatelessWidget {
     print(eventData);
     EventsInfoMap.add(eventData);
     if (eventData["type"] == "OPEN_EXTERNAL_URL") {
+      String url = eventData["data"]["url"];
+      _launchURL(url);
+    }
+    if (eventData["type"] == "BANK_OAUTH_URL") {
       String url = eventData["data"]["url"];
       _launchURL(url);
     }
