@@ -1,7 +1,5 @@
-//
-//  ViewController.swift
-//  FastLink
-//
+// Copyright (c) 2021 Yodlee, Inc. All Rights Reserved.
+// Licensed under the MIT License. See `LICENSE` for details.
 
 import UIKit
 
@@ -39,7 +37,7 @@ class LoginViewController: UIViewController, UITextViewDelegate,UITextFieldDeleg
         let fastLinkURL = self.configInfoForKey(key:"FastLinkURL").addingPercentEncoding(withAllowedCharacters:.urlFragmentAllowed)
         
         FastlinkURLTF.text = fastLinkURL
-        ExtraParamsTV.text = "configName=aggregation"
+        ExtraParamsTV.text = "configName=Aggregation&intentUrl=yodlee://backtofastlink"
         
         //Move textfield when keypad is persent on the view
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)

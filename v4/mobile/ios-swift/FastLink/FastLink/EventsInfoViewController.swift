@@ -1,7 +1,5 @@
-//
-//  EventsInfoViewController.swift
-//  FastLink
-//
+// Copyright (c) 2021 Yodlee, Inc. All Rights Reserved.
+// Licensed under the MIT License. See `LICENSE` for details.
 
 import UIKit
 
@@ -15,7 +13,7 @@ class EventsInfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         //Set dark mode app
         if self.traitCollection.userInterfaceStyle == .dark {
             self.logoutBtn.layer.backgroundColor = UIColor.black.cgColor
