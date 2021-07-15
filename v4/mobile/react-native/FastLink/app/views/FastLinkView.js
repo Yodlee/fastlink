@@ -1,3 +1,6 @@
+// Copyright (c) 2021 Yodlee, Inc. All Rights Reserved.
+// Licensed under the MIT License. See `LICENSE` for details.
+
 import React from 'react'
 import { View, Linking } from 'react-native'
 import { WebView } from 'react-native-webview'
@@ -41,6 +44,16 @@ const FastLinkContainerView = ({ route, navigation }) => {
 			if (parsedMessageData.type == 'OPEN_EXTERNAL_URL') {
 				let url = parsedMessageData.data.url
 
+				Linking.canOpenURL(url).then(supported => {
+					if (supported) {
+						Linking.openURL(url)
+					} else {
+						Alert.alert('Alert', 'Opening url not supported')
+					}
+				})
+			}
+			if (parsedMessageData.type == 'BANK_OAUTH_URL') {
+				let url = parsedMessageData.data.url
 				//In this Sample App we are using the Linking module to open the URL in the default browser
 				Linking.canOpenURL(url).then(supported => {
 					if (supported) {
