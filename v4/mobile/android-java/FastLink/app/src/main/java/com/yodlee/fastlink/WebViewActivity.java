@@ -137,12 +137,6 @@ class JSInterfaceHandler {
                     mContext.startActivity(intent);
                 }
             }
-
-            if (type.equals("BANK_OAUTH_URL")) {
-                String URL = _data.getString("url");
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(URL));
-                mContext.startActivity(intent);
-            }
         } catch (JSONException e) {
             Log.d("FL:ERROR", e.getMessage());
         }
