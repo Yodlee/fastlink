@@ -52,17 +52,6 @@ const FastLinkContainerView = ({ route, navigation }) => {
 					}
 				})
 			}
-			if (parsedMessageData.type == 'BANK_OAUTH_URL') {
-				let url = parsedMessageData.data.url
-				//In this Sample App we are using the Linking module to open the URL in the default browser
-				Linking.canOpenURL(url).then(supported => {
-					if (supported) {
-						Linking.openURL(url)
-					} else {
-						Alert.alert('Alert', 'Opening url not supported')
-					}
-				})
-			}
 		}
 	}
 

@@ -85,10 +85,6 @@ class FastLinkView extends StatelessWidget {
       String url = eventData["data"]["url"];
       _launchURL(url);
     }
-    if (eventData["type"] == "BANK_OAUTH_URL") {
-      String url = eventData["data"]["url"];
-      _launchURL(url);
-    }
 
     if (eventData["type"] == "POST_MESSAGE") {
       String action = eventData["data"]["action"];

@@ -123,17 +123,6 @@ extension FastLinkViewController: WKScriptMessageHandler {
                     UIApplication.shared.open(url)
                 }
             }
-            //In this Sample App bank oauth url is opened in the Default browser
-            if(json["type"] as! String == "BANK_OAUTH_URL"){
-                
-                if let data = json["data"] as? [String:Any] {
-                    guard let url = URL(string: data["url"] as! String) else {
-                        print("invalid URL")
-                        return
-                    }
-                    UIApplication.shared.open(url)
-                }
-            }
             print(json["type"] as Any)
         }
     }
