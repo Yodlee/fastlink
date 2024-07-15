@@ -2,9 +2,13 @@
 	"name": "FastLink",
 	"version": "0.0.1",
 	"private": true,
+	"engines": {
+		"node": "16.x"
+	},
 	"scripts": {
 		"android": "react-native run-android",
 		"ios": "react-native run-ios",
+		"postinstall": "patch-package",
 		"start": "react-native start",
 		"test": "jest",
 		"lint": "eslint ."
@@ -28,7 +32,9 @@
 		"babel-jest": "^24.9.0",
 		"eslint": "^6.5.1",
 		"jest": "^24.9.0",
-		"metro-react-native-babel-preset": "^0.58.0",
+		"metro-react-native-babel-preset": "^0.59.0",
+		"patch-package": "^8.0.0",
+		"postinstall-postinstall": "^2.1.0",
 		"react-test-renderer": "16.11.0"
 	},
 	"jest": {
